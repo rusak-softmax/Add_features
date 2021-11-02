@@ -12,7 +12,7 @@ def dropDbTasks = [:]
 def createDbTasks = [:]
 def runHandlers1cTasks = [:]
 def updateDbTasks = [:]
-
+def scannerHome
 pipeline {
 
     parameters {
@@ -142,6 +142,19 @@ pipeline {
                 }
             }
         }
+       stage('Sonar'){
+        agent   {
+	        label 'windows'
+                }
+        steps{
+            script{
+	                scannerHome = tool "sonar-scanner"
+	                }
+	        withSonarQubeEnv("Sonar"){
+	cmd("${scannerHome}\\bin\\sonar-scanner")
+	}
+	}
+	}
         stage("Тестирование ADD") {
             steps {
                 timestamps {
