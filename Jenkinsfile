@@ -176,12 +176,9 @@ pipeline {
             }
         }
 	    stage('Sonar'){
-        agent   {
-	        label "${(env.jenkinsAgent == null || env.jenkinsAgent == 'null') ? "master" : env.jenkinsAgent}"
-                }
-        steps{
-            script{
-	                scannerHome = tool "sonar-scanner"
+       		 steps{
+            		script{
+	                	scannerHome = tool "sonar-scanner"
 	                }
 	        withSonarQubeEnv("Sonar"){
 	cmd("${scannerHome}\\bin\\sonar-scanner")
