@@ -177,7 +177,7 @@ pipeline {
         }
 	    stage('Sonar'){
         agent   {
-	        "${(env.jenkinsAgent == null || env.jenkinsAgent == 'null') ? "master" : env.jenkinsAgent}"
+	        label "${(env.jenkinsAgent == null || env.jenkinsAgent == 'null') ? "master" : env.jenkinsAgent}"
                 }
         steps{
             script{
