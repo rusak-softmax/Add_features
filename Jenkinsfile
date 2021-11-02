@@ -142,19 +142,6 @@ pipeline {
                 }
             }
         }
-       stage('Sonar'){
-        agent   {
-	        label 'windows'
-                }
-        steps{
-            script{
-	                scannerHome = tool "sonar-scanner"
-	                }
-	        withSonarQubeEnv("Sonar"){
-	cmd("${scannerHome}\\bin\\sonar-scanner")
-	}
-	}
-	}
         stage("Тестирование ADD") {
             steps {
                 timestamps {
@@ -188,6 +175,19 @@ pipeline {
                 }
             }
         }
+	    stage('Sonar'){
+        agent   {
+	        "${(env.jenkinsAgent == null || env.jenkinsAgent == 'null') ? "master" : env.jenkinsAgent}"
+                }
+        steps{
+            script{
+	                scannerHome = tool "sonar-scanner"
+	                }
+	        withSonarQubeEnv("Sonar"){
+	cmd("${scannerHome}\\bin\\sonar-scanner")
+	}
+	}
+	}
     }   
     post {
         always {
